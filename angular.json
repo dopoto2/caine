@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/simpleTones.js"
+            ]
           },
           "configurations": {
             "production": {
