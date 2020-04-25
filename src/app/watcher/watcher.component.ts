@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-declare function playTone(frequency, type: "sine" | "square" | "triangle" | "sawtooth" , durationInSeconds): any;  
-//(frequency, type, durationInSeconds)
-// Sine
-// Square
-// Triangle
-// Sawtooth
+import { Injectable } from '@angular/core';
+import { HubConnection } from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
+import { SignalRService } from '../signal-r.service';
+
+declare function playTone(
+  frequency: number,
+  type: 'sine' | 'square' | 'triangle' | 'sawtooth',
+  durationInSeconds: number): any;
 
 @Component({
   selector: 'app-watcher',
@@ -14,12 +17,31 @@ declare function playTone(frequency, type: "sine" | "square" | "triangle" | "saw
 })
 export class WatcherComponent implements OnInit {
 
-  constructor() { }
+  private readonly signalrService: SignalRService;
+
+  message: string;
+  messages = '';
+
+  constructor(signalRService: SignalRService) {
+    this.signalrService = signalRService;
+  }
 
   ngOnInit() {
+    this.signalrService.init();
+    this.signalrService.messages.subscribe(message => {
+      this.messages += message;
+    });
+  }
+
+  send() {
+    this.signalrService.send(this.message).subscribe(() => {});
+  }
+
+  updateMessage(val){
+    this.message = val;
   }
 
   play(){
-    playTone(12000, "sine", 3.0);
+    playTone(12000, 'sine', 3.0);
   }
 }
