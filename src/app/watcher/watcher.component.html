@@ -1,7 +1,3 @@
-<p>watcher works!</p>
-<button (click)="play()">Click me!!</button>
-
-<input (keyup)="updateMessage($event.target.value)" placeholder="message">
-<button color="primary" (click)="send()">Send</button>
-
-[{{messages}}]
+[{{currentState}}]
+<div *ngIf="currentState === 'STARTED'">Playing...</div>
+<div *ngIf="!currentState === 'IDLE'">Idle</div>

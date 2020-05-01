@@ -5,11 +5,13 @@ import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WatcherComponent } from './watcher/watcher.component';
+import { SenderComponent } from './sender/sender.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WatcherComponent
+    WatcherComponent,
+    SenderComponent
   ],
   imports: [
     BrowserModule,

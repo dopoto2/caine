@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WatcherComponent } from './watcher/watcher.component';
+import { SenderComponent } from './sender/sender.component';
 
 const routes: Routes = [
-  { path: 'watcher', component: WatcherComponent },
+  { path: 'send', component: SenderComponent },
+  { path: 'watch', component: WatcherComponent },
 ];
 
 @NgModule({

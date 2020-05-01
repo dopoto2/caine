@@ -1,8 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { Injectable } from '@angular/core';
-import { HubConnection } from '@aspnet/signalr';
-import * as signalR from '@aspnet/signalr';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SignalRService } from '../signal-r.service';
 
 declare function playTone(
@@ -18,30 +14,38 @@ declare function playTone(
 export class WatcherComponent implements OnInit {
 
   private readonly signalrService: SignalRService;
+  public currentState: "INI" | "IDLE" | "STARTED" = "INI";
 
-  message: string;
-  messages = '';
-
-  constructor(signalRService: SignalRService) {
+  constructor(signalRService: SignalRService, private cdr: ChangeDetectorRef) {
     this.signalrService = signalRService;
   }
 
   ngOnInit() {
     this.signalrService.init();
-    this.signalrService.messages.subscribe(message => {
-      this.messages += message;
+    this.signalrService.hubConnection.on('commandSent', (data: { State: boolean }) => {
+      this.currentState = data.State ? "STARTED" : "IDLE";
+      if (data.State === true) {
+        playTone(12000, 'sine', 99999.00);
+      }
+      else {
+        playTone(0, 'sine', 3.0);
+      }
+      console.log(JSON.stringify(data));
     });
   }
 
-  send() {
-    this.signalrService.send(this.message).subscribe(() => {});
-  }
+  watch(data: { State: boolean }) {
 
-  updateMessage(val){
-    this.message = val;
-  }
+    this.currentState = data.State ? "STARTED" : "IDLE";
 
-  play(){
-    playTone(12000, 'sine', 3.0);
+    // if(data.State === true){
+    //   playTone(12000, 'sine', 3.0);
+    // }
+    // else
+    // {
+    //   playTone(0, 'sine', 3.0);
+    // }
+
+    this.cdr.detectChanges();
   }
 }
