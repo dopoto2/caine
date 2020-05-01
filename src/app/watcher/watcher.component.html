@@ -1,3 +1,7 @@
-[{{currentState}}]
-<div *ngIf="currentState === 'STARTED'">Playing...</div>
-<div *ngIf="currentState !== 'IDLE'">Idle</div>
+<div>
+    <div *ngIf="currentState === 'STARTED'">
+        Playing {{currentCommand.FreqInKhz}} Khz for {{currentCommand.DurationInSeconds}} seconds... 
+        Triggered by {{currentCommand.Owner}} @ {{currentCommand.Date}}.
+    </div>
+    <div *ngIf="currentState === 'IDLE'">Idle</div>
+</div>

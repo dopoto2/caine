@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WatcherComponent } from './watcher/watcher.component';
 import { SenderComponent } from './sender/sender.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WatcherComponent,
-    SenderComponent
+    SenderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
