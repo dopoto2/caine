@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { SignalRConnectionInfo } from './signal-r-connection-info.model';
 import { Command } from './command.model';
 
 @Injectable({
@@ -15,8 +14,8 @@ import { Command } from './command.model';
 export class SignalRService {
 
     private readonly http: HttpClient;
-    //private readonly baseUrl: string = 'https://cainefunctionapp20200424215716.azurewebsites.net:7071/api/'; //'http://localhost:7071/api/';
-    private readonly baseUrl: string = 'http://localhost:7071/api/';
+    private readonly baseUrl: string = 'https://cainefunctionapp20200424215716.azurewebsites.net:7071/api/'; //'http://localhost:7071/api/';
+    //private readonly baseUrl: string = 'http://localhost:7071/api/';
     public hubConnection: HubConnection;
 
     isReady = false;
