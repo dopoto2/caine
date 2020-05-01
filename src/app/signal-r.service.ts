@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { SignalRConnectionInfo } from './signal-r-connection-info.model';
+import { Command } from './command.model';
 
 @Injectable({
     providedIn: 'root',
@@ -14,13 +15,17 @@ import { SignalRConnectionInfo } from './signal-r-connection-info.model';
 export class SignalRService {
 
     private readonly http: HttpClient;
-    private readonly baseUrl: string = 'https://cainefunctionapp20200424215716.azurewebsites.net:7071/api/'; //'http://localhost:7071/api/';
-    //private readonly baseUrl: string = 'http://localhost:7071/api/';
+    //private readonly baseUrl: string = 'https://cainefunctionapp20200424215716.azurewebsites.net:7071/api/'; //'http://localhost:7071/api/';
+    private readonly baseUrl: string = 'http://localhost:7071/api/';
     public hubConnection: HubConnection;
 
-    data = {
-        currentState: false,
-        ready: false
+    isReady = false;
+
+    currentCommand: Command = {
+        FreqInKhz: 0,
+        DurationInSeconds: 0,
+        Owner: "",
+        Date: ""
     };
 
     messages: Subject<string> = new Subject();
@@ -31,23 +36,21 @@ export class SignalRService {
 
     init() {
         this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl('http://localhost:7071/api')
+            .withUrl(this.baseUrl)
             .configureLogging(signalR.LogLevel.Information)
             .build();
         this.hubConnection.onclose(() => console.log('disconnected'));
 
         console.log('connecting...');
         this.hubConnection.start()
-            .then(() => this.data.ready = true)
+            .then(() => this.isReady = true)
             .catch(console.error);
     }
 
-    send(): Observable<void> {
-        this.data.currentState = !this.data.currentState;
-        const stateToSend = { State: this.data.currentState };
+    send(command: Command): Observable<void> {        
         const requestUrl = `${this.baseUrl}SendCommand`;
-        console.log("Sending " + this.data.currentState + "...");
-        return this.http.post(requestUrl, stateToSend).pipe(map((result: any) => { }));
+        console.log("Sending [" + JSON.stringify(command) + "]...");
+        return this.http.post(requestUrl, command).pipe(map((result: any) => { }));
     }
 
     attachWatcher(fn: any) {

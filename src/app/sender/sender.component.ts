@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignalRService } from '../signal-r.service';
+import { Command } from '../command.model';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'app-sender',
@@ -19,6 +21,12 @@ export class SenderComponent implements OnInit {
   }
 
   send() {
-    this.signalrService.send().subscribe(() => {});
+    const command: Command = {
+      FreqInKhz: 12000,
+      DurationInSeconds: 2,
+      Owner: "Doru",
+      Date: Date.now().toString()
+    }
+    this.signalrService.send(command).subscribe(() => {});
   }
 }
