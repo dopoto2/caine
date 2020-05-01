@@ -15,8 +15,13 @@ declare function playTone(
 export class WatcherComponent implements OnInit {
 
 	private readonly signalrService: SignalRService;
-	public currentState: "INI" | "IDLE" | "STARTED" = "INI";
-	public currentCommand: Command;
+	public currentState: "IDLE" | "STARTED" = "IDLE";
+	public currentCommand: Command = {
+		Date: "1/1/2000 13:56 PM",
+		DurationInSeconds: 12,
+		FreqInKhz:23000,
+		Owner: "Doru"
+	};
 
 	constructor(signalRService: SignalRService) {
 		this.signalrService = signalRService;
@@ -25,7 +30,6 @@ export class WatcherComponent implements OnInit {
 	ngOnInit() {
 		this.signalrService.init();
 		this.signalrService.hubConnection.on('commandSent', (data: Command) => {
-			
 			this.currentState = data.DurationInSeconds > 0 ? "STARTED" : "IDLE";
 			this.currentCommand = data;
 
