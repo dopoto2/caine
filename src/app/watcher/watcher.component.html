@@ -1,7 +1,7 @@
-<div *ngIf="currentState === 'STARTED'" class="parent">
-    <img class="playing" src="/assets/img/sound.gif" />
+<div *ngIf="currentState === 'STARTED'" class="parent parent-active">
+    <img class="playing" src="/assets/img/sound-trans.gif" />
     <span class="primary">Playing {{currentCommand.FreqInKhz}} Khz for {{currentCommand.DurationInSeconds}}
         seconds...</span>
     <span class="secondary">Triggered by {{currentCommand.Owner}} @ {{currentCommand.Date}}.</span>
 </div>
-<div *ngIf="currentState === 'IDLE'" class="parent">Sound player is waiting for a Play command...</div>
+<div *ngIf="currentState === 'IDLE'" class="parent parent-inactive">Sound player is waiting for a Play command...</div>
