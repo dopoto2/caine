@@ -36,7 +36,6 @@ export class SenderComponent implements OnInit {
       Owner: this.router.snapshot.queryParamMap.get('owner') || "Doru",
       Date: new Date(Date.now()).toLocaleString()
     };
-    debugger;
     this._snackBar.open("Sending command...", "", { duration: 2000 });
     this.signalrService.send(command).subscribe(() => {
       this._snackBar.open("Command sent, please wait a few seconds.", "", { duration: 2000 });
