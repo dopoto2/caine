@@ -21,7 +21,7 @@ export class WatcherComponent implements OnInit {
 	public currentCommand: Command = {
 		Date: "1/1/2000 13:56 PM",
 		DurationInSeconds: 12,
-		FreqInKhz:23000,
+		FreqInKhz:23,
 		Owner: "Doru"
 	};
 	private isInPlayMode = false;
