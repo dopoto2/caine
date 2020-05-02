@@ -24,7 +24,7 @@ export class WatcherComponent implements OnInit {
 		FreqInKhz:23,
 		Owner: "Doru"
 	};
-	private isInPlayMode = false;
+	isInPlayMode = false;
 
 	constructor(signalRService: SignalRService, private router: ActivatedRoute) {
 		this.signalrService = signalRService;
