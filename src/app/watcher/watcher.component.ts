@@ -37,7 +37,7 @@ export class WatcherComponent implements OnInit {
 		this.signalrService.hubConnection.on('commandSent', (data: Command) => {
 			this.currentState = data.DurationInSeconds > 0 ? "STARTED" : "IDLE";
 			this.currentCommand = data;
-debugger;
+
 			if(this.isInPlayMode){
 				playTone(data.FreqInKhz * 1000, 'sine', data.DurationInSeconds);
 			}
@@ -46,7 +46,7 @@ debugger;
 
 			setTimeout(() => {
 				this.currentState = "IDLE";
-			}, data.DurationInSeconds  * 1000);
+			}, data.DurationInSeconds * 1000);
 		});
 	}
 }
