@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignalRService } from '../signal-r.service';
+import { ActivatedRoute } from '@angular/router';
+
 import { Command } from '../command.model';
 
 declare function playTone(
@@ -22,18 +24,24 @@ export class WatcherComponent implements OnInit {
 		FreqInKhz:23000,
 		Owner: "Doru"
 	};
+	private isInPlayMode = false;
 
-	constructor(signalRService: SignalRService) {
+	constructor(signalRService: SignalRService, private router: ActivatedRoute) {
 		this.signalrService = signalRService;
 	}
 
 	ngOnInit() {
+		this.isInPlayMode = this.router.snapshot.queryParamMap.get('play') === 'true';
+
 		this.signalrService.init();
 		this.signalrService.hubConnection.on('commandSent', (data: Command) => {
 			this.currentState = data.DurationInSeconds > 0 ? "STARTED" : "IDLE";
 			this.currentCommand = data;
+debugger;
+			if(this.isInPlayMode){
+				playTone(data.FreqInKhz * 1000, 'sine', data.DurationInSeconds);
+			}
 
-			playTone(data.FreqInKhz, 'sine', data.DurationInSeconds);
 			console.log("Received:" + JSON.stringify(data));
 
 			setTimeout(() => {

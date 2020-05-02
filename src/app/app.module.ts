@@ -13,6 +13,7 @@ import { WatcherComponent } from './watcher/watcher.component';
 import { SenderComponent } from './sender/sender.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatSliderModule,
     MatInputModule,
     MatButtonModule,
