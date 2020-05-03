@@ -4,11 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Command } from '../command.model';
 
-declare function playTone(
-	frequency: number,
-	type: 'sine' | 'square' | 'triangle' | 'sawtooth',
-	durationInSeconds: number): any;
-
 @Component({
 	selector: 'app-watcher',
 	templateUrl: './watcher.component.html',
@@ -39,7 +34,7 @@ export class WatcherComponent implements OnInit {
 			this.currentCommand = data;
 
 			if(this.isInPlayMode){
-				playTone(data.FreqInKhz * 1000, 'sine', data.DurationInSeconds);
+				this.playBeep(data.FreqInKhz, data.FreqInKhz);
 			}
 
 			console.log("Received:" + JSON.stringify(data));
@@ -49,4 +44,29 @@ export class WatcherComponent implements OnInit {
 			}, data.DurationInSeconds * 1000);
 		});
 	}
+
+	playBeep(freqInKhz: number, durationInSeconds: number) {
+		var audioCtx = new((<any>window).AudioContext || (<any>window).webkitAudioContext)();
+
+		var oscillator = audioCtx.createOscillator();
+		var gainNode = audioCtx.createGain();
+	  
+		oscillator.connect(gainNode);
+		gainNode.connect(audioCtx.destination);
+	  
+		gainNode.gain.value = 1;
+		oscillator.frequency.value = freqInKhz * 1000;
+		oscillator.type = 'sawtooth';
+	  
+		oscillator.start();
+	  
+		setTimeout(
+		  function() {
+			oscillator.stop();
+		  },
+		  durationInSeconds * 1000
+		);
+	  };
+
+
 }
