@@ -56,7 +56,7 @@ export class WatcherComponent implements OnInit {
 	  
 		gainNode.gain.value = 1;
 		oscillator.frequency.value = freqInKhz * 1000;
-		oscillator.type = 'sawtooth';
+		oscillator.type = 'square';
 	  
 		oscillator.start();
 	  
