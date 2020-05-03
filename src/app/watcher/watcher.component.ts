@@ -34,7 +34,7 @@ export class WatcherComponent implements OnInit {
 			this.currentCommand = data;
 
 			if(this.isInPlayMode){
-				this.playBeep(data.FreqInKhz, data.FreqInKhz);
+				this.playBeep(data.FreqInKhz, data.DurationInSeconds);
 			}
 
 			console.log("Received:" + JSON.stringify(data));
@@ -61,8 +61,9 @@ export class WatcherComponent implements OnInit {
 		oscillator.start();
 	  
 		setTimeout(
-		  function() {
+		  () => {
 			oscillator.stop();
+			console.log("Stopped " + freqInKhz + " khz / " + durationInSeconds + " seconds.");
 		  },
 		  durationInSeconds * 1000
 		);
