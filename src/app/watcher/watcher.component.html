@@ -1,7 +1,12 @@
-<p>watcher works!</p>
-<button (click)="play()">Click me!!</button>
-
-<input (keyup)="updateMessage($event.target.value)" placeholder="message">
-<button color="primary" (click)="send()">Send</button>
-
-[{{messages}}]
+<div *ngIf="currentState === 'STARTED'" class="parent parent-active">
+    <img class="playing" src="/assets/img/sound-trans.gif" />
+    <span class="primary">
+        Playing {{isInPlayMode ? "here" : ""}} 
+        {{currentCommand.FreqInKhz}} kHz for
+        {{currentCommand.DurationInSeconds}}
+        seconds...</span>
+    <span class="secondary">Sent by {{currentCommand.Owner}} @ {{currentCommand.Date}}.</span>
+</div>
+<div *ngIf="currentState === 'IDLE'" class="parent parent-inactive">
+    <span class="primary-inactive">Sound player is waiting for a Play command...</span>
+</div>
