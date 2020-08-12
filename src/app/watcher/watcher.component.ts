@@ -3,6 +3,7 @@ import { SignalRService } from '../signal-r.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { Command } from '../command.model';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-watcher',
@@ -20,13 +21,16 @@ export class WatcherComponent implements OnInit {
 		Owner: "Doru"
 	};
 	isInPlayMode = false;
+	playMode$: Subscription;
 
-	constructor(signalRService: SignalRService, private router: ActivatedRoute) {
+	constructor(signalRService: SignalRService, private route: ActivatedRoute) {
 		this.signalrService = signalRService;
 	}
 
 	ngOnInit() {
-		this.isInPlayMode = this.router.snapshot.queryParamMap.get('play') === 'true';
+		this.playMode$ = this.route.paramMap.subscribe((params) => {
+			this.isInPlayMode = params.get("play") === "true" ? true : false;
+		  });
 
 		this.signalrService.init();
 		this.signalrService.hubConnection.on('commandSent', (data: Command) => {
@@ -69,5 +73,7 @@ export class WatcherComponent implements OnInit {
 		);
 	  };
 
-
+	  ngOnDestroy() {
+		this.playMode$.unsubscribe();
+	  }
 }
