@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "caine"
+  "defaultProject": "caine",
+  "cli": {
+    "analytics": false
+  }
 }

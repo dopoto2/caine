@@ -48,7 +48,6 @@ export class SignalRService {
 
     send(command: Command): Observable<void> {
         const requestUrl = `${this.baseUrl}SendCommand`;
-        console.log("Sending [" + JSON.stringify(command) + "]...");
         return this.http.post(requestUrl, command).pipe(map((result: any) => { }));
     }
 

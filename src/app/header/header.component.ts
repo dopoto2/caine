@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.less"],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.less']
 })
-export class FooterComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   isInPlayMode = false;
   playMode$: Subscription;
 
@@ -18,6 +18,10 @@ export class FooterComponent implements OnInit {
       this.isInPlayMode = params.get("play") === "true" ? true : false;
       console.log("rt" + this.route.snapshot.queryParamMap.get("play"));
     });
+  }
+
+  onToggle($event){
+    this.router.navigate(['/home', { play: $event }]);
   }
 
   ngOnDestroy() {
