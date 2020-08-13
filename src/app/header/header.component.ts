@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.playMode$ = this.route.paramMap.subscribe((params) => {
       this.isInPlayMode = params.get("play") === "true" ? true : false;
-      console.log("rt" + this.route.snapshot.queryParamMap.get("play"));
     });
   }
 
