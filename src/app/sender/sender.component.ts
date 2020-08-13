@@ -14,8 +14,8 @@ export class SenderComponent implements OnInit {
 
   private readonly signalrService: SignalRService;
 
-  khz: number = 22;
-  seconds: number = 15;
+  khz: number = 3;
+  seconds: number = 3;
 
   constructor(
     signalRService: SignalRService,
@@ -36,7 +36,7 @@ export class SenderComponent implements OnInit {
       Owner: this.router.snapshot.queryParamMap.get('owner') || "Doru",
       Date: new Date(Date.now()).toLocaleString()
     };
-    this._snackBar.open("Sending command...", "", { duration: 2000 });
+    
     this.signalrService.send(command).subscribe(() => {
       this._snackBar.open("Command sent, please wait a few seconds.", "", { duration: 2000 });
     });

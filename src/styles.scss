@@ -1,5 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 
+ 
+
+// [node_modules/@ngx-tiny/switch-input/theme.scss]
+
+$color-handle: #fff!default;
+$color-background: #ccc!default;
+$color-selected: #1ba875!default;
+
+ngx-switch-input {
+  .ngx-switch-input {
+    &-handle {
+      background: $color-handle;
+    }
+
+    &-background {
+      background: $color-background;
+    }
+  }
+
+  .ngx-switch-input-checked .ngx-switch-input-background {
+    background: $color-selected;
+  }
+}
+
+// /[node_modules/@ngx-tiny/switch-input/theme.scss]
+
+
+
 //html, body { height: 100%; }
 body { 
     margin: 5px;
@@ -26,8 +54,4 @@ body {
 
 .mat-raised-button {
     width: 220px;
-}
-
-.ngx-switch-input-checked .ngx-switch-input-background {
-    background: #1ba875;
 }
