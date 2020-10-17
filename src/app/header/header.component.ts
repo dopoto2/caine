@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-  isInPlayMode = false;
+  isInPlayMode = true;
   playMode$: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
