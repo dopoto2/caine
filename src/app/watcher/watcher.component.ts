@@ -1,79 +1,98 @@
-import { Component, OnInit } from '@angular/core';
-import { SignalRService } from '../signal-r.service';
-import { ActivatedRoute } from '@angular/router';
-
-import { Command } from '../command.model';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { CommandService } from "../command.service";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
+import { CurrentStateType } from "../current-state-type.model";
+import { Command } from "../command.model";
 
 @Component({
-	selector: 'app-watcher',
-	templateUrl: './watcher.component.html',
-	styleUrls: ['./watcher.component.less']
+    selector: "app-watcher",
+    templateUrl: "./watcher.component.html",
+    styleUrls: ["./watcher.component.less"],
 })
 export class WatcherComponent implements OnInit {
+    private readonly commandService: CommandService;
 
-	private readonly signalrService: SignalRService;
-	public currentState: "IDLE" | "STARTED" = "IDLE";
-	public currentCommand: Command = {
-		Date: "1/1/2000 13:56 PM",
-		DurationInSeconds: 12,
-		FreqInKhz:23,
-		Owner: "Doru"
-	};
-	isInPlayMode = false;
-	playMode$: Subscription;
+    isInPlayMode = false;
+    playModeSubscription: Subscription;
+    commandsSubscription: Subscription;
+    currentStateSubscription: Subscription;
 
-	constructor(signalRService: SignalRService, private route: ActivatedRoute) {
-		this.signalrService = signalRService;
-	}
+    currentCommand: Command;
+    currentState: CurrentStateType;
 
-	ngOnInit() {
-		this.playMode$ = this.route.paramMap.subscribe((params) => {
-			this.isInPlayMode = params.get("play") === "true" ? true : false;
-		  });
+    oscillator: any;
 
-		this.signalrService.init();
-		this.signalrService.hubConnection.on('commandSent', (data: Command) => {
-			this.currentState = data.DurationInSeconds > 0 ? "STARTED" : "IDLE";
-			this.currentCommand = data;
+    /**
+     * Just so we can use this enum in the HTML template.
+     */
+    currentStateEnum = CurrentStateType;
 
-			if(this.isInPlayMode){
-				this.playBeep(data.FreqInKhz, data.DurationInSeconds);
-			}
+    constructor(commandService: CommandService, private route: ActivatedRoute) {
+        this.commandService = commandService;
+    }
 
-			console.log("Received:" + JSON.stringify(data));
+    ngOnInit() {
+        this.playModeSubscription = this.route.paramMap.subscribe((params) => {
+            this.isInPlayMode = params.get("play") === "true" ? true : false;
+        });
 
-			setTimeout(() => {
-				this.currentState = "IDLE";
-			}, data.DurationInSeconds * 1000);
-		});
-	}
+        this.commandService.currentCommand$.subscribe((command) => {
+            this.currentCommand = command;
+            if (this.isInPlayMode) {
+                command.DurationInSeconds > 0
+                    ? this.playBeep(
+                          command.FreqInKhz,
+                          command.DurationInSeconds
+                      )
+                    : this.stop();
+            }
+        });
 
-	playBeep(freqInKhz: number, durationInSeconds: number) {
-		var audioCtx = new((<any>window).AudioContext || (<any>window).webkitAudioContext)();
+        this.commandService.currentState$.subscribe((currentState) => {
+            this.currentState = currentState;
+        });
+    }
 
-		var oscillator = audioCtx.createOscillator();
-		var gainNode = audioCtx.createGain();
-	  
-		oscillator.connect(gainNode);
-		gainNode.connect(audioCtx.destination);
-	  
-		gainNode.gain.value = 1;
-		oscillator.frequency.value = freqInKhz * 1000;
-		oscillator.type = 'square';
-	  
-		oscillator.start();
-	  
-		setTimeout(
-		  () => {
-			oscillator.stop();
-			console.log("Stopped " + freqInKhz + " khz / " + durationInSeconds + " seconds.");
-		  },
-		  durationInSeconds * 1000
-		);
-	  };
+    playBeep(freqInKhz: number, durationInSeconds: number) {
+        var audioCtx = new ((<any>window).AudioContext ||
+            (<any>window).webkitAudioContext)();
 
-	  ngOnDestroy() {
-		this.playMode$.unsubscribe();
-	  }
+        this.oscillator = audioCtx.createOscillator();
+        var gainNode = audioCtx.createGain();
+
+        this.oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        gainNode.gain.value = 1;
+        this.oscillator.frequency.value = freqInKhz * 1000;
+        this.oscillator.type = "square";
+
+        this.oscillator.start();
+
+        setTimeout(() => {
+            this.oscillator.stop();
+            console.log(
+                "Stopped " +
+                    freqInKhz +
+                    " khz / " +
+                    durationInSeconds +
+                    " seconds."
+            );
+        }, durationInSeconds * 1000);
+    }
+
+    stop(): void {
+        this.oscillator.stop();
+    }
+
+    ngOnDestroy() {
+        if (this.playModeSubscription) {
+            this.playModeSubscription.unsubscribe();
+        }
+
+        if (this.commandsSubscription) {
+            this.commandsSubscription.unsubscribe();
+        }
+    }
 }

@@ -1,19 +1,48 @@
 <div>
-    <mat-grid-list cols="1" rowHeight="100px" style="width:100%">
+    <mat-grid-list cols="1" rowHeight="100px" style="width: 100%">
         <mat-grid-tile>
             <fieldset>
                 <legend>kHz</legend>
-                <mat-slider min="0" max="25" step="1" thumbLabel [(ngModel)]="khz" tickInterval="1"></mat-slider>
+                <mat-slider
+                    min="0"
+                    max="25"
+                    step="1"
+                    thumbLabel
+                    [(ngModel)]="khz"
+                    tickInterval="1"
+                ></mat-slider>
             </fieldset>
         </mat-grid-tile>
         <mat-grid-tile>
             <fieldset>
                 <legend>Seconds</legend>
-                <mat-slider min="0" max="60" step="1" thumbLabel [(ngModel)]="seconds" tickInterval="5"></mat-slider>
+                <mat-slider
+                    min="0"
+                    max="60"
+                    step="1"
+                    thumbLabel
+                    [(ngModel)]="seconds"
+                    tickInterval="5"
+                ></mat-slider>
             </fieldset>
         </mat-grid-tile>
         <mat-grid-tile>
-            <button mat-raised-button color="primary" (click)="send()">Play!</button>
+            <button
+                *ngIf="currentState === currentStateEnum.Idle"
+                mat-raised-button
+                color="primary"
+                (click)="play()"
+            >
+                Play!
+            </button>
+            <button
+                *ngIf="currentState === currentStateEnum.InProgress"
+                mat-raised-button
+                color="secondary"
+                (click)="stop()"
+            >
+                Stop
+            </button>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

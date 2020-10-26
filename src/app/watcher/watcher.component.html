@@ -1,4 +1,4 @@
-<div *ngIf="currentState === 'STARTED'" class="parent parent-active">
+<div *ngIf="currentState === currentStateEnum.InProgress" class="parent parent-active">
     <img class="playing" src="/assets/img/sound-trans.gif" />
     <span class="primary">
         Playing {{isInPlayMode ? "here" : ""}} 
@@ -7,6 +7,6 @@
         seconds...</span>
     <span class="secondary">Sent by {{currentCommand.Owner}} @ {{currentCommand.Date}}.</span>
 </div>
-<div *ngIf="currentState === 'IDLE'" class="parent parent-inactive">
+<div *ngIf="currentState === currentStateEnum.Idle" class="parent parent-inactive">
     <span class="primary-inactive">Sound player is waiting for a Play command...</span>
 </div>
