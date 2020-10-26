@@ -5,6 +5,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { NgxSwitchInputModule } from "@ngx-tiny/switch-input";
 
@@ -16,7 +17,7 @@ import { HomeComponent } from "./home/home.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from "./header/header.component";
-import { CommandService } from './command.service';
+import { CommandService } from "./command.service";
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { CommandService } from './command.service';
         MatInputModule,
         MatButtonModule,
         MatGridListModule,
+        MatButtonToggleModule,
         MatSnackBarModule,
         NgxSwitchInputModule,
     ],
