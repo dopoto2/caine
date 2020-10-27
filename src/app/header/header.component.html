@@ -1,19 +1,18 @@
 <div class="head">
-    <div class="logo">
-        Câine 1.6
-        <!-- <span class="pull-right" title=
-"Enable playing sounds in this window.
-Disable this if you only want to send Play commands to other instances">
-        <ngx-switch-input
-        [value]="isInPlayMode"
-        (valueChange)="onToggle($event)">
-    </ngx-switch-input>
-    </span> -->
-    </div>
-
-    <mat-button-toggle-group class="options">
-        <mat-button-toggle value="send">Send only</mat-button-toggle>
-        <mat-button-toggle value="play">Play only</mat-button-toggle>
-        <mat-button-toggle value="send-and-play">Send &amp; Play</mat-button-toggle>
+    <div class="logo">Câine 1.6</div>
+    <mat-button-toggle-group
+        class="options"
+        [ngModel]="mode"
+        (change)="onModeChange($event)"
+    >
+        <mat-button-toggle [value]="modeEnum.ControlAndPlay"
+            >Control &amp; Play</mat-button-toggle
+        >
+        <mat-button-toggle [value]="modeEnum.ControlOnly"
+            >Control only</mat-button-toggle
+        >
+        <mat-button-toggle [value]="modeEnum.PlayOnly"
+            >Play only</mat-button-toggle
+        >
     </mat-button-toggle-group>
 </div>

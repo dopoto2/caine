@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { CurrentStateType } from "../current-state-type.model";
 import { Command } from "../command.model";
+import { Mode } from '../mode.model';
 
 @Component({
     selector: "app-watcher",
@@ -13,8 +14,10 @@ import { Command } from "../command.model";
 export class WatcherComponent implements OnInit {
     private readonly commandService: CommandService;
 
-    isInPlayMode = false;
-    playModeSubscription: Subscription;
+    mode: Mode;
+    modeEnum = Mode;
+
+    modeSubscription: Subscription;
     commandsSubscription: Subscription;
     currentStateSubscription: Subscription;
 
@@ -23,9 +26,6 @@ export class WatcherComponent implements OnInit {
 
     oscillator: any;
 
-    /**
-     * Just so we can use this enum in the HTML template.
-     */
     currentStateEnum = CurrentStateType;
 
     constructor(commandService: CommandService, private route: ActivatedRoute) {
@@ -33,13 +33,13 @@ export class WatcherComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.playModeSubscription = this.route.paramMap.subscribe((params) => {
-            this.isInPlayMode = params.get("play") === "true" ? true : false;
+        this.modeSubscription = this.route.paramMap.subscribe((params) => {
+            this.mode = (params.get("mode") as Mode) ?? Mode.ControlAndPlay;
         });
 
         this.commandService.currentCommand$.subscribe((command) => {
             this.currentCommand = command;
-            if (this.isInPlayMode) {
+            if (this.mode === Mode.ControlAndPlay || this.mode === Mode.PlayOnly) {
                 command.DurationInSeconds > 0
                     ? this.playBeep(
                           command.FreqInKhz,
@@ -87,8 +87,8 @@ export class WatcherComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        if (this.playModeSubscription) {
-            this.playModeSubscription.unsubscribe();
+        if (this.modeSubscription) {
+            this.modeSubscription.unsubscribe();
         }
 
         if (this.commandsSubscription) {

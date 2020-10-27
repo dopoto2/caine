@@ -1,29 +1,34 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
+
+import { Mode } from "../mode.model";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+    selector: "app-header",
+    templateUrl: "./header.component.html",
+    styleUrls: ["./header.component.less"],
 })
 export class HeaderComponent implements OnInit {
-  isInPlayMode = true;
-  playMode$: Subscription;
+    mode: Mode;
+    modeEnum = Mode;
+    modeSubscription: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+    constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.playMode$ = this.route.paramMap.subscribe((params) => {
-      this.isInPlayMode = params.get("play") === "true" ? true : false;
-    });
-  }
+    ngOnInit() {
+        this.modeSubscription = this.route.paramMap.subscribe((params) => {
+            this.mode = (params.get("mode") as Mode) ?? Mode.ControlAndPlay;
+        });
+    }
 
-  onToggle($event){
-    this.router.navigate(['/home', { play: $event }]);
-  }
+    onModeChange($event) {
+        this.router.navigate(["/home", { mode: $event.value }]);
+    }
 
-  ngOnDestroy() {
-    this.playMode$.unsubscribe();
-  }
+    ngOnDestroy() {
+        if (this.modeSubscription) {
+            this.modeSubscription.unsubscribe();
+        }
+    }
 }

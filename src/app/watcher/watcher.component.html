@@ -1,7 +1,7 @@
 <div *ngIf="currentState === currentStateEnum.InProgress" class="parent parent-active">
     <img class="playing" src="/assets/img/sound-trans.gif" />
     <span class="primary">
-        Playing {{isInPlayMode ? "here" : ""}} 
+        Playing {{mode === modeEnum.PlayOnly || mode === modeEnum.ControlAndPlay ? "here" : ""}} 
         {{currentCommand.FreqInKhz}} kHz for
         {{currentCommand.DurationInSeconds}}
         seconds...</span>
