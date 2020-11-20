@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { CommandService } from "../services/command/command.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { CurrentStateType } from "../models/current-state-type.model";
-import { Command } from "../models/command.model";
-import { Mode } from '../models/mode.model';
+
+import { CommandService } from "../../services/command/command.service";
+import { CurrentStateType } from "../../models/current-state-type.model";
+import { Command } from "../../models/command.model";
+import { Mode } from '../../models/mode.model';
 
 @Component({
     selector: "app-watcher",

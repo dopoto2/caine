@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { CommandService } from "../services/command/command.service";
 import { ActivatedRoute } from "@angular/router";
-
-import { Command } from "../models/command.model";
 import { Subscription } from 'rxjs';
-import { CurrentStateType } from '../models/current-state-type.model';
+
+import { CommandService } from "../../services/command/command.service";
+import { Command } from "../../models/command.model";
+import { CurrentStateType } from '../../models/current-state-type.model';
 
 @Component({
     selector: "app-sender",

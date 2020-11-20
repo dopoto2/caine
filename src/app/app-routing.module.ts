@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { WatcherComponent } from './watcher/watcher.component';
-import { SenderComponent } from './sender/sender.component';
-import { HomeComponent } from './home/home.component';
+import { WatcherComponent } from './components/watcher/watcher.component';
+import { SenderComponent } from './components/sender/sender.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

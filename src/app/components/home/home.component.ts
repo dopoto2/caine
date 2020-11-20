@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Mode } from "../models/mode.model";
+
+import { Mode } from "../../models/mode.model";
 
 @Component({
     selector: "app-home",

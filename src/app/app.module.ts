@@ -11,12 +11,12 @@ import { NgxSwitchInputModule } from "@ngx-tiny/switch-input";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { WatcherComponent } from "./watcher/watcher.component";
-import { SenderComponent } from "./sender/sender.component";
-import { HomeComponent } from "./home/home.component";
+import { WatcherComponent } from "./components/watcher/watcher.component";
+import { SenderComponent } from "./components/sender/sender.component";
+import { HomeComponent } from "./components/home/home.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
-import { HeaderComponent } from "./header/header.component";
+import { HeaderComponent } from "./components/header/header.component";
 import { CommandService } from "./services/command/command.service";
 
 @NgModule({
