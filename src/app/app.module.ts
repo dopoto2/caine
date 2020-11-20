@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import {MatCardModule} from '@angular/material/card';
 import { NgxSwitchInputModule } from "@ngx-tiny/switch-input";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -18,6 +19,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from "./components/header/header.component";
 import { CommandService } from "./services/command/command.service";
+import { OptionsComponent } from './components/options/options.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +28,7 @@ import { CommandService } from "./services/command/command.service";
         SenderComponent,
         HomeComponent,
         HeaderComponent,
+        OptionsComponent,
     ],
     imports: [
         BrowserModule,
@@ -39,7 +42,8 @@ import { CommandService } from "./services/command/command.service";
         MatGridListModule,
         MatButtonToggleModule,
         MatSnackBarModule,
-        NgxSwitchInputModule,
+        MatCardModule,
+        NgxSwitchInputModule
     ],
     providers: [],
     bootstrap: [AppComponent],
