@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { CommandService } from "../command.service";
+import { CommandService } from "../services/command/command.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { CurrentStateType } from "../current-state-type.model";
-import { Command } from "../command.model";
-import { Mode } from '../mode.model';
+import { CurrentStateType } from "../models/current-state-type.model";
+import { Command } from "../models/command.model";
+import { Mode } from '../models/mode.model';
 
 @Component({
     selector: "app-watcher",
@@ -66,7 +66,7 @@ export class WatcherComponent implements OnInit {
 
         gainNode.gain.value = 1;
         this.oscillator.frequency.value = freqInKhz * 1000;
-        this.oscillator.type = "square";
+        this.oscillator.type = "sine";
 
         this.oscillator.start();
 

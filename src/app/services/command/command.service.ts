@@ -6,8 +6,8 @@ import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Subject } from "rxjs";
 
-import { Command } from "./command.model";
-import { CurrentStateType } from "./current-state-type.model";
+import { Command } from "../../models/command.model";
+import { CurrentStateType } from "../../models/current-state-type.model";
 
 @Injectable({
     providedIn: "root",
@@ -77,7 +77,7 @@ export class CommandService {
 
     sendCommandToRemoteClients(command: Command): void {
         const requestUrl = `${this.baseUrl}SendCommand`;
-        this.http.post(requestUrl, command).pipe(map(() => {}));
+        this.http.post(requestUrl, command).subscribe(() => {});
     }
 
     attachWatcher(fn: any) {
