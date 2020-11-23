@@ -1,20 +1,38 @@
-<mat-card class="example-card">
+<mat-card 
+    class="watcher-container"
+    [class.control-only]="this.mode === modeEnum.ControlOnly"
+    >
     <mat-card-header>
-      <mat-card-title>Sound Player</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div *ngIf="currentState === currentStateEnum.InProgress" class="parent parent-active">
-            <img class="playing" src="/assets/img/sound-trans.gif" />
+        <mat-card-title>Sound Player</mat-card-title>
+
+        <mat-card-subtitle
+            *ngIf="currentState === currentStateEnum.InProgress"
+        >
+            <img src="/assets/img/sound-trans.gif" />
             <span class="primary">
-                Playing {{mode === modeEnum.PlayOnly || mode === modeEnum.ControlAndPlay ? "here" : ""}} 
-                {{currentCommand.FreqInKhz}} kHz for
-                {{currentCommand.DurationInSeconds}}
-                seconds...</span>
-            <span class="secondary">Sent by {{currentCommand.Owner}} @ {{currentCommand.Date}}.</span>
-        </div>
-        <div *ngIf="currentState === currentStateEnum.Idle" class="parent parent-inactive">
-            <span class="primary-inactive">Sound player is waiting for a Play command...</span>
-        </div>
-    </mat-card-content>
-  </mat-card>
+                Playing
+                {{
+                    mode === modeEnum.PlayOnly ||
+                    mode === modeEnum.ControlAndPlay
+                        ? "here"
+                        : ""
+                }}
+                {{ currentCommand.FreqInKhz }} kHz for
+                {{ currentCommand.DurationInSeconds }}
+                seconds...</span
+            >
+            <span class="secondary"
+                >Sent by {{ currentCommand.Owner }} @
+                {{ currentCommand.Date }}.</span
+            >
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="currentState === currentStateEnum.Idle">
+            {{ this.mode === modeEnum.ControlOnly ? "Disabled" : "Idle" }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-icon *ngIf="this.mode === modeEnum.ControlOnly" 
+    title="
+In Control Only mode, sounds will not be played on this device. To 
+play sounds here, please switch to Control &amp; Play."
+    class="volume-off">volume_off</mat-icon>
+</mat-card>

@@ -22,7 +22,12 @@ export class WatcherComponent implements OnInit {
     commandsSubscription: Subscription;
     currentStateSubscription: Subscription;
 
-    currentCommand: Command;
+    currentCommand: Command = {
+        DurationInSeconds: 2,
+        FreqInKhz: 3,
+        Owner: 'Dorere',
+        Date: '1/1/2020'
+    };
     currentState: CurrentStateType;
 
     oscillator: any;

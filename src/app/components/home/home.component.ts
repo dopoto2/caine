@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
     modeSubscription: Subscription;
 
     showSender = true;
-    showPlayer = true;
 
     constructor(private route: ActivatedRoute) {}
 
@@ -25,17 +24,14 @@ export class HomeComponent implements OnInit {
             switch (this.mode) {
                 case Mode.ControlAndPlay: {
                     this.showSender = true;
-                    this.showPlayer = true;
                     break;
                 }
                 case Mode.ControlOnly: {
                     this.showSender = true;
-                    this.showPlayer = false;
                     break;
                 }
                 case Mode.PlayOnly: {
                     this.showSender = false;
-                    this.showPlayer = true;
                     break;
                 }
                 default: {
