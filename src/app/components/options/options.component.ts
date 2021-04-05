@@ -18,7 +18,7 @@ export class OptionsComponent implements OnInit {
 
     ngOnInit() {
         this.modeSubscription = this.route.paramMap.subscribe((params) => {
-            this.mode = (params.get("mode") as Mode) ?? Mode.ControlAndPlay;
+            this.mode = (params.get("mode") as Mode) ?? Mode.ControlOnly;
         });
     }
 
